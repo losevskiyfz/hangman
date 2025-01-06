@@ -5,8 +5,8 @@ import com.losevskiyfz.view.GameCanvas;
 import java.util.Scanner;
 
 public class HangmanGame {
-
     private final Scanner scanner = new Scanner(System.in);
+    private GameCanvas gameCanvas;
 
     public void run() {
         showIntro();
@@ -41,18 +41,42 @@ public class HangmanGame {
         return scanner.next().charAt(0);
     }
 
-    private void startGame() {
-        GameCanvas gameCanvas = new GameCanvas();
-        while (!gameCanvas.isGameOver()) {
-            System.out.println();
-            System.out.println("Enter a letter: ");
-            gameCanvas.guessLetter(getSymbol());
-        }
+    private boolean isSymbolLetter(Character symbol) {
+        return Character.isLetter(symbol);
+    }
+
+    private boolean isSymbolTried(Character symbol) {
+        if(gameCanvas == null) return false;
+        return gameCanvas.isLetterTried(symbol);
+    }
+
+    private boolean isSymbolValid(Character symbol) {
+        return isSymbolLetter(symbol) && !isSymbolTried(symbol);
+    }
+
+    private void showGameResult(){
+        if(gameCanvas == null) return;
         if (gameCanvas.isWon()) {
             System.out.println("You won!");
         } else {
             System.out.println("You lost!");
         }
+    }
+
+    private void acceptUserMoves(){
+        while (!gameCanvas.isGameOver()) {
+            System.out.println();
+            System.out.println("Enter a letter: ");
+            Character symbol = getSymbol();
+            if (!isSymbolValid(symbol)) continue;
+            gameCanvas.guessLetter(symbol);
+        }
+    }
+
+    private void startGame() {
+        gameCanvas = new GameCanvas();
+        acceptUserMoves();
+        showGameResult();
         showInterface();
     }
 

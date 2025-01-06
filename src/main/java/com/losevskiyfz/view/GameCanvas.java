@@ -3,11 +3,10 @@ package com.losevskiyfz.view;
 import static com.losevskiyfz.api.NounsRandomizer.getRandomNoun;
 
 public class GameCanvas {
-
     private static final Integer INITIAL_NUMBER_OF_LIVES = 6;
     private final HangmanAsciiViewsHolder hangmanAsciiViewsHolder;
     private final GuessedLettersManager guessedLettersManager;
-    private Integer numberOfLives = null;
+    private Integer numberOfLives;
     private boolean gameOver = false;
     private boolean isWon = false;
 
@@ -19,7 +18,7 @@ public class GameCanvas {
     }
 
     public void guessLetter(Character letter) {
-        if(!guessedLettersManager.guessLetter(letter)){
+        if(!guessedLettersManager.guessLetter(Character.toLowerCase(letter))) {
             numberOfLives--;
         }
         checkGameState();
@@ -74,6 +73,10 @@ public class GameCanvas {
 
     public boolean isWon(){
         return isWon;
+    }
+
+    public boolean isLetterTried(Character letter){
+        return guessedLettersManager.isLetterTried(letter);
     }
 
 }

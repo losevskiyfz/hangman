@@ -6,10 +6,12 @@ public class GuessedLettersManager {
 
     private Map<Character, List<Integer>> letterIndexesMap;
     private char[] guessedLetters;
+    private final Set<Character> triedLetters;
 
     public GuessedLettersManager(String hiddenWord) {
         initLetterIndexesMap(hiddenWord);
         initGuessedLetters(hiddenWord.length());
+        triedLetters = new HashSet<>();
     }
 
     private void initLetterIndexesMap(String hiddenWord) {
@@ -35,6 +37,7 @@ public class GuessedLettersManager {
     }
 
     public boolean guessLetter(char letter) {
+        triedLetters.add(Character.toLowerCase(letter));
         if (letterIndexesMap.containsKey(letter)) {
             for (Integer index : letterIndexesMap.get(letter)) {
                 guessedLetters[index] = letter;
@@ -46,6 +49,10 @@ public class GuessedLettersManager {
 
     public String getGuessedLettersView() {
         return String.valueOf(guessedLetters);
+    }
+
+    public boolean isLetterTried(char letter) {
+        return triedLetters.contains(Character.toLowerCase(letter));
     }
 
 }
