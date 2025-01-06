@@ -72,7 +72,7 @@ class HangmanAsciiViewsHolder {
                      |     |
                      |     O
                      |    /|\\
-                     |
+                     |    /
                      |
                     _|_
                 """
