@@ -7,22 +7,30 @@ import java.util.Scanner;
 public class HangmanGame {
     private final Scanner scanner = new Scanner(System.in);
     private GameCanvas gameCanvas;
+    private static final char START_GAME = '1';
+    private static final char EXIT_GAME = '2';
 
     public void run() {
         showIntro();
         showInterface();
+        scanner.close();
     }
 
-    private void showInterface(){
-        showMenu();
-        switch (getSymbol()) {
-            case '1':
-                startGame();
-                break;
-            case '2':
-                exitGame();
-            default:
-                showInterface();
+    private void showInterface() {
+        boolean doAgain = true;
+        while (doAgain) {
+            showMenu();
+            switch (getSymbol()) {
+                case START_GAME:
+                    startGame();
+                    doAgain = false;
+                    break;
+                case EXIT_GAME:
+                    doAgain = false;
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -35,27 +43,42 @@ public class HangmanGame {
         System.out.println("What do you want?");
         System.out.println("1. Start game");
         System.out.println("2. Exit");
+        System.out.print("Enter number: ");
     }
 
     private Character getSymbol() {
         return scanner.next().charAt(0);
     }
 
-    private boolean isSymbolLetter(Character symbol) {
-        return Character.isLetter(symbol);
+    private boolean isSymbolEnglishLetter(Character symbol) {
+        boolean isSymbolEnglishLetter = Character.isLetter(symbol) &&
+                ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
+        if (!isSymbolEnglishLetter) {
+            System.out.println();
+            System.out.println("Invalid symbol");
+        }
+        return isSymbolEnglishLetter;
     }
 
     private boolean isSymbolTried(Character symbol) {
-        if(gameCanvas == null) return false;
-        return gameCanvas.isLetterTried(symbol);
+        if (gameCanvas == null) {
+            return false;
+        }
+        boolean isLetterTried = gameCanvas.isLetterTried(symbol);
+        if (isLetterTried) {
+            System.out.println();
+            System.out.println("The letter is tried!");
+        }
+        return isLetterTried;
     }
 
     private boolean isSymbolValid(Character symbol) {
-        return isSymbolLetter(symbol) && !isSymbolTried(symbol);
+        return isSymbolEnglishLetter(symbol) && !isSymbolTried(symbol);
     }
 
-    private void showGameResult(){
-        if(gameCanvas == null) return;
+    private void showGameResult() {
+        if (gameCanvas == null) return;
+        System.out.println();
         if (gameCanvas.isWon()) {
             System.out.println("You won!");
         } else {
@@ -63,12 +86,14 @@ public class HangmanGame {
         }
     }
 
-    private void acceptUserMoves(){
+    private void acceptUserMoves() {
         while (!gameCanvas.isGameOver()) {
             System.out.println();
-            System.out.println("Enter a letter: ");
+            System.out.print("Enter a letter: ");
             Character symbol = getSymbol();
-            if (!isSymbolValid(symbol)) continue;
+            if (!isSymbolValid(symbol)){
+                continue;
+            }
             gameCanvas.guessLetter(symbol);
         }
     }
@@ -78,9 +103,5 @@ public class HangmanGame {
         acceptUserMoves();
         showGameResult();
         showInterface();
-    }
-
-    private void exitGame() {
-        System.exit(0);
     }
 }
