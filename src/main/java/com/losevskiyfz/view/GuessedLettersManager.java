@@ -19,14 +19,14 @@ public class GuessedLettersManager {
         letterIndexesMap = new HashMap<>();
 
         for (int i = 0; i < hiddenLetters.length; i++) {
-            List<Integer> listToPut = letterIndexesMap.getOrDefault(
+            List<Integer> letterIndexesList = letterIndexesMap.getOrDefault(
                     hiddenLetters[i],
                     new ArrayList<>()
             );
-            listToPut.add(i);
+            letterIndexesList.add(i);
             letterIndexesMap.put(
                     hiddenLetters[i],
-                    listToPut
+                    letterIndexesList
             );
         }
     }

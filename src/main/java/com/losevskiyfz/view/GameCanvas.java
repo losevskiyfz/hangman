@@ -4,7 +4,7 @@ import static com.losevskiyfz.api.NounsRandomizer.getRandomNoun;
 
 public class GameCanvas {
     private static final Integer INITIAL_NUMBER_OF_LIVES = 6;
-    private final HangmanAsciiViewsHolder hangmanAsciiViewsHolder;
+    private final HangmanAsciiViews hangmanAsciiViewsHolder;
     private final GuessedLettersManager guessedLettersManager;
     private Integer numberOfLives;
     private boolean gameOver = false;
@@ -12,7 +12,7 @@ public class GameCanvas {
 
     public GameCanvas() {
         numberOfLives = INITIAL_NUMBER_OF_LIVES;
-        hangmanAsciiViewsHolder = new HangmanAsciiViewsHolder();
+        hangmanAsciiViewsHolder = new HangmanAsciiViews();
         guessedLettersManager = new GuessedLettersManager(getRandomNoun().orElseThrow());
         redrawCanvas();
     }

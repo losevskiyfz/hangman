@@ -51,8 +51,9 @@ public class HangmanGame {
     }
 
     private boolean isSymbolEnglishLetter(Character symbol) {
-        boolean isSymbolEnglishLetter = Character.isLetter(symbol) &&
-                ((symbol >= 'a' && symbol <= 'z') || (symbol >= 'A' && symbol <= 'Z'));
+        boolean isSymbolEnglishLetter =
+                Character.isAlphabetic(symbol) &&
+                Character.isLetter(symbol);
         if (!isSymbolEnglishLetter) {
             System.out.println();
             System.out.println("Invalid symbol");
@@ -91,7 +92,7 @@ public class HangmanGame {
             System.out.println();
             System.out.print("Enter a letter: ");
             Character symbol = getSymbol();
-            if (!isSymbolValid(symbol)){
+            if (!isSymbolValid(symbol)) {
                 continue;
             }
             gameCanvas.guessLetter(symbol);

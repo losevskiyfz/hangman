@@ -3,7 +3,7 @@ package com.losevskiyfz.view;
 import java.util.Map;
 import java.util.Optional;
 
-class HangmanAsciiViewsHolder {
+class HangmanAsciiViews {
 
     public Optional<String> getHangmanAsciiView(Integer numberOfLives){
         String state = HANGMAN_ASCII_VIEW_FOR_NUMBER_OF_LIVES.get(numberOfLives);
