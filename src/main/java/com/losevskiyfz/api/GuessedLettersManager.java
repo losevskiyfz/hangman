@@ -1,4 +1,4 @@
-package com.losevskiyfz.view;
+package com.losevskiyfz.api;
 
 import java.util.*;
 

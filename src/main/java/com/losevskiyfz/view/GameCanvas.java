@@ -1,12 +1,14 @@
 package com.losevskiyfz.view;
 
+import com.losevskiyfz.api.GuessedLettersManager;
+
 import static com.losevskiyfz.api.NounsRandomizer.getRandomNoun;
 
 public class GameCanvas {
     private static final Integer INITIAL_NUMBER_OF_LIVES = 6;
     private final HangmanAsciiViews hangmanAsciiViewsHolder;
     private final GuessedLettersManager guessedLettersManager;
-    private Integer numberOfLives;
+    private int numberOfLives;
     private boolean gameOver = false;
     private boolean isWon = false;
 
