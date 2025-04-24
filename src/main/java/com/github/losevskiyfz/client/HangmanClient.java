@@ -1,9 +1,8 @@
 package com.github.losevskiyfz.client;
 
-import com.github.losevskiyfz.api.HangmanApi;
-import com.github.losevskiyfz.api.HangmanApiImpl;
-import com.github.losevskiyfz.api.Response;
-import com.github.losevskiyfz.api.State;
+import com.github.losevskiyfz.api.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,6 +14,7 @@ import java.util.Scanner;
 public class HangmanClient {
     private final HangmanApi api = new HangmanApiImpl();
     private final Scanner scanner = new Scanner(System.in);
+    private static final Logger LOG = LogManager.getLogger(HangmanClient.class);
 
     public void start() {
         printWelcomeMessage();
@@ -92,7 +92,7 @@ public class HangmanClient {
             }
         } catch (IOException e) {
             System.out.println("Welcome to Hangman! (banner failed to load)");
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 }
