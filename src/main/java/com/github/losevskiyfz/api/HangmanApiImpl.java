@@ -1,9 +1,13 @@
 package com.github.losevskiyfz.api;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class HangmanApiImpl implements HangmanApi {
+    private static final Logger LOG = LogManager.getLogger(HangmanApiImpl.class);
     private final RandomWordProvider wordProvider = new RandomWordProvider();
     private final CharValidator charValidator = new CharValidator();
     private State state = State.STOPPED;
@@ -15,6 +19,7 @@ public class HangmanApiImpl implements HangmanApi {
 
     @Override
     public void newGame() {
+        LOG.info("Starting a new game.");
         state = State.PLAYING;
         mistakes = 0;
         maskedWord = flushedMaskedWord();
@@ -32,6 +37,7 @@ public class HangmanApiImpl implements HangmanApi {
         if (!state.equals(State.PLAYING)) throw new IllegalStateException();
 
         // validation
+        LOG.info("Letter validation.");
         if (!charValidator.isValid(ch)) return Response.INVALID;
         ch = Character.toUpperCase(ch);
 
@@ -41,6 +47,7 @@ public class HangmanApiImpl implements HangmanApi {
         triedLetters.add(ch);
 
         // manage correctness
+        LOG.info("Verifying correctness.");
         List<Integer> indexes = getCharIndexesFromWord(hiddenWord, ch);
         if (indexes.isEmpty()) {
             mistakes++;
