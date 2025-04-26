@@ -22,9 +22,9 @@ public class HangmanApiImpl implements HangmanApi {
         LOG.info("Starting a new game.");
         state = State.PLAYING;
         mistakes = 0;
+        hiddenWord = randomWord();
         maskedWord = flushedMaskedWord();
         triedLetters = flushedTriedLetters();
-        hiddenWord = randomWord();
     }
 
     @Override
